@@ -1,15 +1,32 @@
+import { LanguageSelect } from "@/components/custom/select-language";
+import LoginForm from "@/components/form/login-form";
+import { useTranslation } from "react-i18next";
+
 const Login = () => {
+  const { t } = useTranslation();
+
   return (
-    <div className="flex min-h-screen ">
-      <div className="w-1/4 bg-slate-900">
-      
-      <h1>Wel</h1>
+    /* Container */
+    <div className="flex min-h-screen justify-center items-center relative bg-[url('/src/assets/img/login_bg.jpg')] bg-cover bg-center">
+      {/* Container-overlay */}
+      <div className="absolute top-0 left-0 w-full h-full bg-gray-900 opacity-30"></div>
 
-
+      {/* Language Select in top right corner */}
+      <div className="absolute top-4 right-4 z-20">
+        <LanguageSelect />
       </div>
-      <div className=""></div>
-    </div>
-  )
-}
 
-export default Login
+      {/* Container-content */}
+      <div className="z-10 w-full flex flex-col items-center">
+        <br />
+        <LoginForm />
+        {/* Footer */}
+        <div className="mt-6 text-center text-white text-sm">
+          <p>{t("label_footer")}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

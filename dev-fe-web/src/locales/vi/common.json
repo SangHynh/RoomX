@@ -1,4 +1,17 @@
 {
-    "hello": "Chào",
-    "world": "Thế giới"
+    "hello": "Xin chào",
+    "world": "Thế giới",
+
+    "label_footer": "© 2025 RoomX - Hệ thống quản lý phòng họp. Mọi quyền được bảo lưu.",
+    "label_slogan": "Phòng họp tối ưu, công việc hoàn hảo.",
+    "label_tai_khoan": "Tài khoản",
+    "label_mat_khau": "Mật khẩu",
+
+    "button_dang_nhap": "Đăng nhập",
+
+    "link_quen_mat_khau": "Quên mật khẩu",
+
+    "placeholder_tai_khoan": "Nhập tài khoản",
+    "placeholder_mat_khau": "Nhập mật khẩu"
+
 }

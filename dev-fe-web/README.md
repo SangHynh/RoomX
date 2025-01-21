@@ -1,1 +1,5 @@
 # RoomX
+
+```
+npm run dev
+```

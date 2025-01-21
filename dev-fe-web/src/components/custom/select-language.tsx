@@ -8,10 +8,10 @@ export const LanguageSelect: React.FC = () => {
   return (
     <Select onValueChange={i18n.changeLanguage}>
       <SelectTrigger 
-        className="p-0 bg-transparent border-none focus:outline-none" 
+        className="p-0 bg-transparent border-none focus:outline-none text-white" 
         aria-label="Select language"
       >
-        <Languages className="w-5 h-5 cursor-pointer" />
+        <Languages className="w-5 h-5 cursor-pointer " />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="vi">Tiếng Việt</SelectItem>
