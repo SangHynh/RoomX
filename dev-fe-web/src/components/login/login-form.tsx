@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -94,12 +95,11 @@ const LoginForm = () => {
           </button>
         </form>
         <p className="mt-6 text-gray-600">
-          <a href="#" className="text-blue-500 font-medium hover:no-underline">
+          <Link to="/forgot-password" className="text-blue-500 font-medium hover:no-underline">
             {t("link_quen_mat_khau")}
-          </a>
+          </Link>
         </p>
       </div>
-      
     </div>
   );
 };

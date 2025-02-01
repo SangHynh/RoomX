@@ -1,16 +1,16 @@
 import { LanguageSelect } from "@/components/custom/select-language";
 import { ThemeToggle } from "@/components/custom/theme-toggle";
-import LoginForm from "@/components/form/login-form";
+import LoginForm from "@/components/login/login-form";
 import { useTranslation } from "react-i18next";
 
-const Login = () => {
+const Login: React.FC = () => {
   const { t } = useTranslation();
 
   return (
     /* Container */
     <div className="flex min-h-screen justify-center items-center relative bg-[url('/src/assets/img/login_bg.jpg')] bg-cover bg-center">
       {/* Container-overlay */}
-      <div className="absolute top-0 left-0 w-full h-full bg-gray-900 opacity-30"></div>
+      <div style={{ backgroundColor: "hsl(var(--background))" }} className="absolute top-0 left-0 w-full h-full opacity-50 blur-lg"></div>
 
       {/* Group icons in top right corner */}
       <div className="absolute top-4 right-4 z-20 flex gap-4">
@@ -23,7 +23,7 @@ const Login = () => {
         <br />
         <LoginForm />
         {/* Footer */}
-        <div className="mt-6 text-center text-white text-sm">
+        <div className="mt-6 text-center text-white text-sm text-[var(--foreground)]">
           <p>{t("label_footer")}</p>
         </div>
       </div>

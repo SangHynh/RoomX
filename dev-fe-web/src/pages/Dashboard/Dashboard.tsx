@@ -2,7 +2,7 @@ import { LanguageSelect } from '@/components/custom/select-language';
 import { ThemeToggle } from '@/components/custom/theme-toggle';
 import { useTranslation } from 'react-i18next';
 
-const Dashboard = () => {
+const Dashboard: React.FC = () => {
   const { t } = useTranslation();
 
   return (
