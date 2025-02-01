@@ -1,4 +1,5 @@
 import { LanguageSelect } from "@/components/custom/select-language";
+import { ThemeToggle } from "@/components/custom/theme-toggle";
 import LoginForm from "@/components/form/login-form";
 import { useTranslation } from "react-i18next";
 
@@ -11,8 +12,9 @@ const Login = () => {
       {/* Container-overlay */}
       <div className="absolute top-0 left-0 w-full h-full bg-gray-900 opacity-30"></div>
 
-      {/* Language Select in top right corner */}
-      <div className="absolute top-4 right-4 z-20">
+      {/* Group icons in top right corner */}
+      <div className="absolute top-4 right-4 z-20 flex gap-4">
+        <ThemeToggle/>
         <LanguageSelect />
       </div>
 

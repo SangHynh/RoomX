@@ -3,7 +3,7 @@
     "hello": "Hello",
     "world": "World",
 
-    "lable_footer": "© 2025 RoomX - Meeting room management system. All Rights Reserved",
+    "label_footer": "© 2025 RoomX - Meeting room management system. All Rights Reserved",
     "label_slogan": "Optimized meeting rooms, perfect results.",
     "label_tai_khoan": "Account",
     "label_mat_khau": "Password",
@@ -13,6 +13,9 @@
     "link_quen_mat_khau": "Forgot password",
 
     "placeholder_tai_khoan": "Enter your account",
-    "placeholder_mat_khau": "Enter your password"
+    "placeholder_mat_khau": "Enter your password",
+
+    "warning_nhap_tai_khoan": "Please enter your account",
+    "warning_nhap_mat_khau": "Please enter your password"
 
 }
