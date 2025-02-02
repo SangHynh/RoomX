@@ -23,7 +23,7 @@ const Login: React.FC = () => {
         <br />
         <LoginForm />
         {/* Footer */}
-        <div className="mt-6 text-center text-white text-sm text-[var(--foreground)]">
+        <div className="mt-6 text-center text-md text-[var(--foreground)]">
           <p>{t("label_footer")}</p>
         </div>
       </div>

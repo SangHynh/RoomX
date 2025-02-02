@@ -35,7 +35,7 @@ const LoginForm = () => {
           <div className="mb-6">
             <label
               htmlFor="account"
-              className="block text-gray-700 font-medium mb-2"
+              className="block text-[var(--foreground)] font-medium mb-2"
             >
               {t("label_tai_khoan")}
             </label>
@@ -58,7 +58,7 @@ const LoginForm = () => {
           <div className="mb-6 relative">
             <label
               htmlFor="password"
-              className="block text-gray-700 font-medium mb-2"
+              className="block text-[var(--foreground)] font-medium mb-2"
             >
               {t("label_mat_khau")}
             </label>
@@ -89,7 +89,7 @@ const LoginForm = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-[#3970b0] text-white font-bold py-3 rounded-lg hover:bg-[#2f5a8d] transition duration-300"
+            className="w-full bg-primary text-primary-foreground font-bold py-3 rounded-lg"
           >
             {t("button_dang_nhap")}
           </button>
