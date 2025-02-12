@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   AudioWaveform,
   BookOpen,
@@ -8,22 +8,23 @@ import {
   Command,
   Frame,
   GalleryVerticalEnd,
+  House,
   Map,
   PieChart,
   Settings2,
   SquareTerminal,
-} from "lucide-react"
+} from "lucide-react";
 
-import { NavMain } from "@/components/custom/nav-main"
-import { TeamSwitcher } from "@/components/custom/team-switcher"
+import { NavMain } from "@/components/custom/nav-main";
+import { TeamSwitcher } from "@/components/custom/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { NavUser } from "@/components/custom/nav-user"
+} from "@/components/ui/sidebar";
+import { NavUser } from "@/components/custom/nav-user";
 
 // This is sample data.
 const data = {
@@ -51,63 +52,124 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Dashboard",
       url: "#",
-      icon: SquareTerminal,
-      isActive: true,
+      icon: House,
+      isActive: false,
       items: [
         {
-          title: "History",
+          title: "Tổng quan",
           url: "#",
         },
         {
-          title: "Starred",
+          title: "Thống kê đặt phòng",
           url: "#",
         },
         {
-          title: "Settings",
+          title: "Biểu đồ doanh thu",
           url: "#",
         },
       ],
     },
     {
-      title: "Models",
+      title: "Quản lý người dùng",
       url: "#",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
+          title: "Danh sách người dùng",
           url: "#",
         },
         {
-          title: "Explorer",
+          title: "Cấu hình quyền",
           url: "#",
         },
         {
-          title: "Quantum",
+          title: "Nhóm người dùng",
+          url: "#",
+        }
+      ],
+    },
+    {
+      title: "Quản lý cơ sở",
+      url: "#",
+      icon: Bot,
+      items: [
+        {
+          title: "Danh sách chi nhánh",
+          url: "#",
+        },
+        {
+          title: "Danh sách phòng ban",
+          url: "#",
+        },
+        {
+          title: "Phân bổ ngân sách",
           url: "#",
         },
       ],
     },
     {
-      title: "Documentation",
+      title: "Quản lý cuộc họp",
+      url: "#",
+      icon: Bot,
+      items: [
+        {
+          title: "Phê duyệt phòng",
+          url: "#",
+        },
+        {
+          title: "Thay đổi phòng",
+          url: "#",
+        },
+        {
+          title: "Yêu cầu dịch vụ",
+          url: "#",
+        },
+        {
+          title: "Phản hồi nhanh",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Quản lý tài nguyên",
+      url: "#",
+      icon: Bot,
+      items: [
+        {
+          title: "Danh sách phòng họp",
+          url: "#",
+        },
+        {
+          title: "Danh sách thiết bị",
+          url: "#",
+        },
+        {
+          title: "Cấu hình dịch vụ",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Thông tin",
       url: "#",
       icon: BookOpen,
       items: [
         {
-          title: "Introduction",
+          title: "Hướng dẫn sử dụng",
           url: "#",
         },
         {
-          title: "Get Started",
+          title: "Về chúng tôi",
           url: "#",
         },
         {
-          title: "Tutorials",
+          title: "Phiên bản",
           url: "#",
         },
         {
-          title: "Changelog",
+          title: "Mã nguồn",
           url: "#",
         },
       ],
@@ -135,8 +197,8 @@ const data = {
         },
       ],
     },
-  ]
-}
+  ],
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -147,10 +209,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
-      <SidebarFooter >
+      <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>
       {/* <SidebarRail/> */}
     </Sidebar>
-  )
+  );
 }

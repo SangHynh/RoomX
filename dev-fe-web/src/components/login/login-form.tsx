@@ -1,14 +1,27 @@
-import { useState } from "react";
+import {useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthProvider";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const { t } = useTranslation();
-
+  const { login } = useAuth();
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await login(username, password);
+      window.location.href = "/home";
+    } catch (error) {
+      console.error("Login failed", error);
+    }
   };
 
   return (
@@ -26,12 +39,16 @@ const LoginForm = () => {
           <h4 className="text-lg mt-4">{t("label_slogan")}</h4>
         </div>
       </div>
+
       {/* Right side */}
-      <div style={{ backgroundColor: "hsl(var(--background))" }} className="w-full md:w-1/2 flex flex-col justify-center items-center px-6 py-8 md:px-12 ">
+      <div
+        style={{ backgroundColor: "hsl(var(--background))" }}
+        className="w-full md:w-1/2 flex flex-col justify-center items-center px-6 py-8 md:px-12 "
+      >
         <h2 className="text-2xl font-bold text-[-var(--foreground)] mb-6">
           {t("button_dang_nhap")}
         </h2>
-        <form className="w-full">
+        <form className="w-full" onSubmit={handleLogin}>
           <div className="mb-6">
             <label
               htmlFor="account"
@@ -45,6 +62,8 @@ const LoginForm = () => {
               className="w-full border-b-2 border-gray-300 p-3 focus:outline-none focus:border-blue-500 transition duration-300 bg-transparent rounded-md"
               placeholder={t("placeholder_tai_khoan")}
               required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               onInvalid={(e) =>
                 (e.target as HTMLInputElement).setCustomValidity(
                   t("warning_nhap_tai_khoan")
@@ -69,6 +88,8 @@ const LoginForm = () => {
                 className="w-full border-b-2 border-gray-300 p-3 pr-10 focus:outline-none focus:border-blue-500 transition duration-300 bg-transparent rounded-md"
                 placeholder={t("placeholder_mat_khau")}
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 onInvalid={(e) =>
                   (e.target as HTMLInputElement).setCustomValidity(
                     t("warning_nhap_mat_khau")
@@ -95,7 +116,10 @@ const LoginForm = () => {
           </button>
         </form>
         <p className="mt-6 text-gray-600">
-          <Link to="/forgot-password" className="text-blue-500 font-medium hover:no-underline">
+          <Link
+            to="/forgot-password"
+            className="text-blue-500 font-medium hover:no-underline"
+          >
             {t("link_quen_mat_khau")}
           </Link>
         </p>
