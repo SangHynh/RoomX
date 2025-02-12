@@ -30,6 +30,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { useAuth } from "@/context/AuthProvider"
+import { useCallback } from "react"
 
 export function NavUser({
   user,
@@ -42,6 +43,11 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar()
   const { logout } = useAuth();
+
+  const handleLogout = useCallback(() => {
+    console.log("Tự chạy logout");
+    logout();
+  }, [logout]);
 
   return (
     <SidebarMenu>
@@ -104,7 +110,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem >
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Log out
             </DropdownMenuItem>

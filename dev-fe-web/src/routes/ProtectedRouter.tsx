@@ -8,13 +8,11 @@ const ProtectedRoute = () => {
 
   useEffect(() => {
     const validateToken = async () => {
-      
       /* Kiểm tra token tồn tại */
       if (!token) {
         logout(); 
         return;
       }
-
       /* Kiểm tra token hợp lệ */
       try {
         await axios.post(

@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import keycloak from "@/configs/keycloak.config";
+import Cookies from "node_modules/@types/js-cookie";
+import axios from "axios";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -24,6 +26,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           setIsAuthenticated(true);
           setToken(keycloak.token);
           localStorage.setItem("token", keycloak.token); 
+          localStorage.setItem("refreshToken", keycloak.refreshToken || "");
         }
       })
       .catch((err) => console.error("Keycloak initialization failed", err));
@@ -54,18 +57,48 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setToken(data.access_token);
       setIsAuthenticated(true);
       localStorage.setItem("token", data.access_token); 
+      localStorage.setItem("refreshToken", data.refresh_token || "");
     } catch (error) {
       console.error("Login error:", error);
     }
   };
 
-  const logout = () => {
-    keycloak.logout();
-    setIsAuthenticated(false);
-    setToken(null);
-    localStorage.removeItem("token"); 
-    console.log("Logged out");
+  const logout = async () => {
+    console.log("Logging out...");
+  
+    try {
+      const refreshToken = localStorage.getItem("refreshToken");
+      if (!refreshToken) throw new Error("No refresh token found");
+  
+      const params = new URLSearchParams();
+      params.append("client_id", keycloak.clientId || "");
+      params.append("refresh_token", refreshToken);
+      params.append("client_secret", import.meta.env.VITE_KEYCLOAK_CLIENT_SECRET || "");
+  
+      // Gửi yêu cầu logout đến Keycloak
+      await axios.post(
+        `${keycloak.authServerUrl}/realms/${keycloak.realm}/protocol/openid-connect/logout`,
+        params,
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      );
+  
+      // Xóa token khỏi localStorage
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+  
+      // // Cập nhật state
+      setIsAuthenticated(false);
+      setToken(null);
+  
+      console.log("Logged out successfully");
+  
+      // // Chuyển hướng về trang login
+      window.location.href = "/login";
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
+  
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, token, login, logout }}>
