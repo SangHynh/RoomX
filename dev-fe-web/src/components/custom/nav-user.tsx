@@ -1,19 +1,16 @@
-"use client"
+"use client";
 
 import {
   BadgeCheck,
-  Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
-  Sparkles,
-} from "lucide-react"
+  Moon,
+  Sun,
+  Globe,
+  User,
+} from "lucide-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,32 +19,37 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
-import { useAuth } from "@/context/AuthProvider"
-import { useCallback } from "react"
+} from "@/components/ui/sidebar";
+import { useAuth } from "@/context/AuthProvider";
+import { useCallback } from "react";
+import { ThemeToggle } from "@/components/custom/theme-toggle";
+import { LanguageSelect } from "@/components/custom/select-language";
+import { getShortName } from "@/utils/string.util";
 
 export function NavUser({
   user,
 }: {
   user: {
-    name: string
-    email: string
-    avatar: string
-  }
+    name: string | undefined;
+    email: string | undefined;
+    avatar: string | undefined;
+  };
 }) {
-  const { isMobile } = useSidebar()
-  const { logout } = useAuth();
+  const { isMobile } = useSidebar();
+  const { logout, getUserInfo } = useAuth();
 
   const handleLogout = useCallback(() => {
     console.log("Tự chạy logout");
     logout();
   }, [logout]);
+
+  console.log(getUserInfo());
 
   return (
     <SidebarMenu>
@@ -59,8 +61,8 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground bg-transparent border-none focus:outline-none"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
+                <AvatarFallback className="rounded-lg">{getShortName(user.name) || "AD"}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
@@ -78,8 +80,8 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
+                  <AvatarFallback className="rounded-lg">{getShortName(user.name) || "AD"}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{user.name}</span>
@@ -89,34 +91,47 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
+              <DropdownMenuItem className="h-10">
+                <BadgeCheck />
+                Account
+              </DropdownMenuItem>
+              <DropdownMenuItem className="h-10">
+                <User />
+                Profile
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
+              <DropdownMenuItem
+                onSelect={(e) => e.preventDefault()}
+                className="flex items-center h-10"
+              >
+                <Globe />
+                <LanguageSelect position="right"></LanguageSelect>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
+              <DropdownMenuItem
+                onSelect={(e) => e.preventDefault()}
+                className="flex items-center h-10"
+              >
+                {localStorage.getItem("theme") === "dark" ? (
+                  <Moon className="w-5 h-5" />
+                ) : (
+                  <Sun className="w-5 h-5" />
+                )}
+                <ThemeToggle variant="switch" />
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem
+              onClick={handleLogout}
+              style={{ color: "hsl(0, 85%, 50%)", fontWeight: "500" }}
+            >
               <LogOut />
-              Log out
+              <span>Log out</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }

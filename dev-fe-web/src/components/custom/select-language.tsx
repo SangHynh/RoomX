@@ -8,7 +8,11 @@ import { Languages } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 
-export const LanguageSelect: React.FC = () => {
+interface LanguageSelectProps {
+  position?: "bottom" | "right";
+}
+
+export const LanguageSelect: React.FC<LanguageSelectProps> = ({ position = "bottom" }) => {
   const { i18n } = useTranslation();
   const [language, setLanguage] = useState<string>(i18n.language || "en");
 
@@ -27,15 +31,21 @@ export const LanguageSelect: React.FC = () => {
   };
 
   return (
-    <Select onValueChange={handleChangeLanguage} value={language}>
+    <Select key={language} onValueChange={handleChangeLanguage} value={language}>
       <SelectTrigger
-        className="p-0 bg-transparent border-none focus:outline-none focus:ring-0 focus-visible:ring-0 text-[var(--foreground)]"
+        className="p-2 bg-transparent border-none outline-none focus:ring-0 focus-visible:ring-0 flex items-center"
         aria-label="Select language"
       >
-        <Languages className="w-5 h-5 cursor-pointer" />
+        {position === "bottom" ? (
+          <Languages className="w-5 h-5 cursor-pointer" />
+        ) : (
+          <span className="text-sm font-normal -ml-2">
+            Ngôn ngữ
+          </span>
+        )}
       </SelectTrigger>
 
-      <SelectContent>
+      <SelectContent side={position} className={position === "right" ? "ml-2" : ""}>
         <SelectItem value="vi">Tiếng Việt</SelectItem>
         <SelectItem value="en">English</SelectItem>
       </SelectContent>

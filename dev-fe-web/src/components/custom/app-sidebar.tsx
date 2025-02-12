@@ -6,13 +6,8 @@ import {
   BookOpen,
   Bot,
   Command,
-  Frame,
   GalleryVerticalEnd,
   House,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
 } from "lucide-react";
 
 import { NavMain } from "@/components/custom/nav-main";
@@ -22,17 +17,22 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarRail,
 } from "@/components/ui/sidebar";
 import { NavUser } from "@/components/custom/nav-user";
+import { useAuth } from "@/context/AuthProvider";
+// import { useAuth } from "@/context/AuthProvider";
 
-// This is sample data.
+
+// const {getUserInfo} = useAuth();
+
+// console.log(getUserInfo());
+
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
+  // user: {
+  //   name: "shadcn",
+  //   email: "m@example.com",
+  //   avatar: "/avatars/shadcn.jpg",
+  // },
   teams: [
     {
       name: "Acme Inc",
@@ -174,33 +174,13 @@ const data = {
         },
       ],
     },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const { getUserInfo } = useAuth();
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -210,9 +190,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+      <NavUser user={{ name: getUserInfo()?.username+"", email: getUserInfo()?.email+"", avatar: "aa" }} />
       </SidebarFooter>
-      {/* <SidebarRail/> */}
     </Sidebar>
   );
 }
