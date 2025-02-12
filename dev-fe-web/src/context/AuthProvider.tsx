@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import keycloak from "@/configs/keycloak.config";
-import Cookies from "node_modules/@types/js-cookie";
+import Cookies from "js-cookie";
 import axios from "axios";
 
 interface AuthContextType {
@@ -14,9 +14,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return !!localStorage.getItem("token"); 
+    return !!Cookies.get("token"); 
   });
-  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+  const [token, setToken] = useState<string | null>(Cookies.get("token") || null);
 
   useEffect(() => {
     keycloak
@@ -25,8 +25,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (authenticated && keycloak.token) {
           setIsAuthenticated(true);
           setToken(keycloak.token);
-          localStorage.setItem("token", keycloak.token); 
-          localStorage.setItem("refreshToken", keycloak.refreshToken || "");
+          Cookies.set("token", keycloak.token, { expires: 1, secure: true, sameSite: "Strict" }); 
+          Cookies.set("refreshToken", keycloak.refreshToken || "", { expires: 1, secure: true, sameSite: "Strict" });
         }
       })
       .catch((err) => console.error("Keycloak initialization failed", err));
@@ -43,21 +43,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     params.append("client_secret", import.meta.env.VITE_KEYCLOAK_CLIENT_SECRET || "");
 
     try {
-      const response = await fetch(`${keycloak.authServerUrl}/realms/${keycloak.realm}/protocol/openid-connect/token`, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: params,
-      });
+      const response = await axios.post(
+        `${keycloak.authServerUrl}/realms/${keycloak.realm}/protocol/openid-connect/token`,
+        params,
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      );
 
-      if (!response.ok) throw new Error("Login failed");
-
-      const data = await response.json();
+      const data = response.data;
       keycloak.token = data.access_token;
       keycloak.refreshToken = data.refresh_token;
       setToken(data.access_token);
       setIsAuthenticated(true);
-      localStorage.setItem("token", data.access_token); 
-      localStorage.setItem("refreshToken", data.refresh_token || "");
+
+      // Lưu token vào cookie
+      Cookies.set("token", data.access_token, { expires: 1/24, secure: true, sameSite: "Strict" });
+      Cookies.set("refreshToken", data.refresh_token || "", { expires: 7, secure: true, sameSite: "Strict" });
+
     } catch (error) {
       console.error("Login error:", error);
     }
@@ -67,7 +68,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     console.log("Logging out...");
   
     try {
-      const refreshToken = localStorage.getItem("refreshToken");
+      const refreshToken = Cookies.get("refreshToken");
       if (!refreshToken) throw new Error("No refresh token found");
   
       const params = new URLSearchParams();
@@ -82,23 +83,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
       );
   
-      // Xóa token khỏi localStorage
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
+      // Xóa token khỏi cookie
+      Cookies.remove("token");
+      Cookies.remove("refreshToken");
   
-      // // Cập nhật state
+      // Cập nhật state
       setIsAuthenticated(false);
       setToken(null);
   
       console.log("Logged out successfully");
-  
-      // // Chuyển hướng về trang login
+
+      // Chuyển hướng về trang login
       window.location.href = "/login";
     } catch (error) {
       console.error("Logout error:", error);
     }
   };
-  
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, token, login, logout }}>
