@@ -1,25 +1,46 @@
 {
     "hello": "Xin chào",
     "world": "Thế giới",
-
     "label_footer": "© 2025 RoomX - Hệ thống quản lý phòng họp. Dự án mã nguồn mở.",
     "label_slogan": "Phòng họp tối ưu, công việc hoàn hảo.",
     "label_tai_khoan": "Tài khoản",
     "label_mat_khau": "Mật khẩu",
     "label_404": "Oops! Trang này có vẻ như không tồn tại.",
-
-
+    "menu_trang_chu": "Trang chủ",
+    "menu_tong_quan": "Tổng quan",
+    "menu_thong_ke": "Thống kê",
+    "menu_doanh_thu": "Doanh thu",
+    "menu_bao_cao": "Báo cáo",
+    "menu_quan_ly_nguoi_dung": "Người dùng",
+    "menu_danh_sach_nguoi_dung": "Danh sách người dùng",
+    "menu_cau_hinh_quyen": "Cấu hình quyền",
+    "menu_quan_ly_nhom": "Quản lý nhóm",
+    "menu_quan_ly_co_so": "Cơ sở",
+    "menu_danh_sach_chi_nhanh": "Danh sách chi nhánh",
+    "menu_danh_sach_phong_ban": "Danh sách phòng ban",
+    "menu_phan_bo_ngan_sach": "Phân bổ ngân sách",
+    "menu_quan_ly_tai_nguyen": "Tài nguyên",
+    "menu_danh_sach_phong_hop": "Danh sách phòng họp",
+    "menu_danh_sach_thiet_bi": "Danh sách thiết bị",
+    "menu_cau_hinh_dich_vu": "Cấu hình dịch vụ",
+    "menu_quan_ly_cuoc_hop": "Cuộc họp",
+    "menu_phe_duyet_cuoc_hop": "Phê duyệt cuộc họp",
+    "menu_quan_ly_dat_phong": "Quản lý đặt phòng",
+    "menu_cau_hinh_cuoc_hop": "Cấu hình cuộc họp",
+    "menu_yeu_cau_dich_vu": "Yêu cầu dịch vụ",
+    "menu_phan_hoi_nhanh": "Phản hồi nhanh",
+    "menu_hoat_dong": "Hoạt động",
+    "menu_quan_ly_phien": "Quản lý phiên",
+    "menu_nhat_ky_hoat_dong": "Nhật ký hoạt động",
+    "menu_thong_tin": "Thông tin",
+    "menu_huong_dan_su_dung": "Hướng dẫn sử dụng",
+    "menu_ve_chung_toi": "Về chúng tôi",
+    "menu_thong_tin_san_pham": "Thông tin sản phẩm",
+    "menu_ma_nguon": "Mã nguồn",
     "button_dang_nhap": "Đăng nhập",
-
     "link_quen_mat_khau": "Quên mật khẩu",
-
     "placeholder_tai_khoan": "Nhập tài khoản",
     "placeholder_mat_khau": "Nhập mật khẩu",
-
     "warning_nhap_tai_khoan": "Vui lòng nhập tài khoản",
     "warning_nhap_mat_khau": "Vui lòng nhập mật khẩu"
-
-
-    
-
 }

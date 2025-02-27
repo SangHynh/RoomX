@@ -4,6 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "@/routes/ProtectedRouter";
 import Dashboard from "@/pages/Dashboard/Dashboard";
 import Login from "@/pages/Auth/Login";
+import User from "@/pages/Dashboard/User";
 
 export const RootRouter = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ export const RootRouter = createBrowserRouter([
       {
         path: "/home",
         element: <Dashboard />,
+      },
+      {
+        path: "/users",
+        element: <User />,
       },
     ],
   },

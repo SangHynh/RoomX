@@ -1,13 +1,11 @@
+import UserList from "@/components/admin/users/user-list";
 import CMSLayout from "@/layouts/cms-layout";
-import { useTranslation } from "react-i18next";
 
 const Dashboard: React.FC = () => {
-  const { t } = useTranslation();
 
   return (
     <CMSLayout>
-      <h1>{t("Dashboard")}</h1>
-      <p>Welcome to the admin panel!</p>
+        <UserList ></UserList>
     </CMSLayout>
   );
 };

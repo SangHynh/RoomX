@@ -2,12 +2,16 @@
 
 import * as React from "react";
 import {
+  Activity,
   AudioWaveform,
   BookOpen,
-  Bot,
+  Building,
+  CalendarCheck,
   Command,
   GalleryVerticalEnd,
-  House,
+  LayoutDashboard,
+  Package,
+  Users,
 } from "lucide-react";
 
 import { NavMain } from "@/components/custom/nav-main";
@@ -20,166 +24,180 @@ import {
 } from "@/components/ui/sidebar";
 import { NavUser } from "@/components/custom/nav-user";
 import { useAuth } from "@/context/AuthProvider";
-// import { useAuth } from "@/context/AuthProvider";
+import { useTranslation } from "react-i18next";
 
-
-// const {getUserInfo} = useAuth();
-
-// console.log(getUserInfo());
-
-const data = {
-  // user: {
-  //   name: "shadcn",
-  //   email: "m@example.com",
-  //   avatar: "/avatars/shadcn.jpg",
-  // },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "#",
-      icon: House,
-      isActive: false,
-      items: [
-        {
-          title: "Tổng quan",
-          url: "#",
-        },
-        {
-          title: "Thống kê đặt phòng",
-          url: "#",
-        },
-        {
-          title: "Biểu đồ doanh thu",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Quản lý người dùng",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Danh sách người dùng",
-          url: "#",
-        },
-        {
-          title: "Cấu hình quyền",
-          url: "#",
-        },
-        {
-          title: "Nhóm người dùng",
-          url: "#",
-        }
-      ],
-    },
-    {
-      title: "Quản lý cơ sở",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Danh sách chi nhánh",
-          url: "#",
-        },
-        {
-          title: "Danh sách phòng ban",
-          url: "#",
-        },
-        {
-          title: "Phân bổ ngân sách",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Quản lý cuộc họp",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Phê duyệt phòng",
-          url: "#",
-        },
-        {
-          title: "Thay đổi phòng",
-          url: "#",
-        },
-        {
-          title: "Yêu cầu dịch vụ",
-          url: "#",
-        },
-        {
-          title: "Phản hồi nhanh",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Quản lý tài nguyên",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Danh sách phòng họp",
-          url: "#",
-        },
-        {
-          title: "Danh sách thiết bị",
-          url: "#",
-        },
-        {
-          title: "Cấu hình dịch vụ",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Thông tin",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Hướng dẫn sử dụng",
-          url: "#",
-        },
-        {
-          title: "Về chúng tôi",
-          url: "#",
-        },
-        {
-          title: "Phiên bản",
-          url: "#",
-        },
-        {
-          title: "Mã nguồn",
-          url: "#",
-        },
-      ],
-    },
-  ],
-};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-
   const { getUserInfo } = useAuth();
+  const { t } = useTranslation();
+
+  const data = {
+    teams: [
+      {
+        name: "Acme Inc",
+        logo: GalleryVerticalEnd,
+        plan: "Enterprise",
+      },
+      {
+        name: "Acme Corp.",
+        logo: AudioWaveform,
+        plan: "Startup",
+      },
+      {
+        name: "Evil Corp.",
+        logo: Command,
+        plan: "Free",
+      },
+    ],
+    navMain: [
+      {
+        title: t("menu_trang_chu"),
+        url: "#",
+        icon: LayoutDashboard,
+        isActive: false,
+        items: [
+          {
+            title: t("menu_tong_quan"),
+            url: "#",
+          },
+          {
+            title: t("menu_thong_ke"),
+            url: "#",
+          },
+          {
+            title: t("menu_doanh_thu"),
+            url: "#",
+          },
+          {
+            title: t("menu_bao_cao"),
+            url: "#",
+          },
+        ],
+      },
+      {
+        title: t("menu_quan_ly_nguoi_dung"),
+        url: "#",
+        icon: Users,
+        items: [
+          {
+            title: t("menu_danh_sach_nguoi_dung"),
+            url: "#",
+          },
+          {
+            title: t("menu_cau_hinh_quyen"),
+            url: "#",
+          },
+          {
+            title: t("menu_quan_ly_nhom"),
+            url: "#",
+          },
+        ],
+      },
+      {
+        title: t("menu_quan_ly_co_so"),
+        url: "#",
+        icon: Building,
+        items: [
+          {
+            title: t("menu_danh_sach_chi_nhanh"),
+            url: "#",
+          },
+          // {
+          //   title: t("menu_danh_sach_phong_ban"),
+          //   url: "#",
+          // },
+          {
+            title: t("menu_phan_bo_ngan_sach"),
+            url: "#",
+          },
+        ],
+      },
+      {
+        title: t("menu_quan_ly_cuoc_hop"),
+        url: "#",
+        icon: CalendarCheck,
+        items: [
+          {
+            title: t("menu_phe_duyet_cuoc_hop"),
+            url: "#",
+          },
+          {
+            title: t("menu_quan_ly_dat_phong"),
+            url: "#",
+          },
+          {
+            title: t("menu_cau_hinh_cuoc_hop"),
+            url: "#",
+          },
+          {
+            title: t("menu_yeu_cau_dich_vu"),
+            url: "#",
+          },
+          {
+            title: t("menu_phan_hoi_nhanh"),
+            url: "#",
+          },
+        ],
+      },
+      {
+        title: t("menu_quan_ly_tai_nguyen"),
+        url: "#",
+        icon: Package,
+        items: [
+          {
+            title: t("menu_danh_sach_phong_hop"),
+            url: "#",
+          },
+          {
+            title: t("menu_danh_sach_thiet_bi"),
+            url: "#",
+          },
+          {
+            title: t("menu_cau_hinh_dich_vu"),
+            url: "#",
+          },
+        ],
+      },
+      {
+        title: t("menu_hoat_dong"),
+        url: "#",
+        icon: Activity,
+        items: [
+          {
+            title: t("menu_quan_ly_phien"),
+            url: "#",
+          },
+          {
+            title: t("menu_nhat_ky_hoat_dong"),
+            url: "#",
+          },
+        ],
+      },
+      {
+        title: t("menu_thong_tin"),
+        url: "#",
+        icon: BookOpen,
+        items: [
+          {
+            title: t("menu_huong_dan_su_dung"),
+            url: "#",
+          },
+          {
+            title: t("menu_ve_chung_toi"),
+            url: "#",
+          },
+          {
+            title: t("menu_thong_tin_san_pham"),
+            url: "#",
+          },
+          {
+            title: t("menu_ma_nguon"),
+            url: "#",
+          },
+        ],
+      },
+    ],
+  };
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -190,7 +208,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-      <NavUser user={{ name: getUserInfo()?.username+"", email: getUserInfo()?.email+"", avatar: "aa" }} />
+        <NavUser
+          user={{
+            name: getUserInfo()?.username + "",
+            email: getUserInfo()?.email + "",
+            avatar: "",
+          }}
+        />
       </SidebarFooter>
     </Sidebar>
   );

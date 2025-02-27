@@ -8,10 +8,10 @@ interface AuthContextType {
   isAuthenticated: boolean;
   token: string | null;
   login: (username: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   getUserInfo: () => { email?: string; username?: string } | null;
+  resetPassword: (email: string) => Promise<void>;
 }
-
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         onLoad: "check-sso",
         silentCheckSsoRedirectUri:
           window.location.origin + "/silent-check-sso.html",
+        checkLoginIframe: false,
       })
       .then((authenticated) => {
         if (authenticated && keycloak.token) {
@@ -50,7 +51,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   // Đăng nhập bằng API của Keycloak
-  const login = async (username: string, password: string) => {
+  const login: AuthContextType["login"] = async (
+    username: string,
+    password: string
+  ) => {
     const params = new URLSearchParams();
     params.append("client_id", keycloak.clientId || "");
     params.append("grant_type", "password");
@@ -74,8 +78,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       keycloak.refreshToken = data.refresh_token;
       setToken(data.access_token);
       setIsAuthenticated(true);
-
-      // Lưu token vào cookie
       Cookies.set("token", data.access_token, {
         expires: 1 / 96,
         secure: true,
@@ -91,7 +93,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const logout = async () => {
+  const logout: AuthContextType["logout"] = async () => {
     console.log("Logging out...");
 
     try {
@@ -99,31 +101,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (!refreshToken) throw new Error("No refresh token found");
 
       const params = new URLSearchParams();
-      params.append("client_id", keycloak.clientId || "");
+      params.append("client_id", import.meta.env.VITE_KEYCLOAK_CLIENT_ID || "");
       params.append("refresh_token", refreshToken);
       params.append(
         "client_secret",
         import.meta.env.VITE_KEYCLOAK_CLIENT_SECRET || ""
       );
-
       // Gửi yêu cầu logout đến Keycloak
       await axios.post(
-        `${keycloak.authServerUrl}/realms/${keycloak.realm}/protocol/openid-connect/logout`,
+        `${import.meta.env.VITE_KEYCLOAK_URL}/realms/${
+          import.meta.env.VITE_KEYCLOAK_REALM
+        }/protocol/openid-connect/logout`,
         params,
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
       );
-
       // Xóa token khỏi cookie
       Cookies.remove("token");
       Cookies.remove("refreshToken");
-
       // Cập nhật state
       setIsAuthenticated(false);
       setToken(null);
-
-      console.log("Logged out successfully");
-
-      // Chuyển hướng về trang login
       window.location.href = "/login";
     } catch (error) {
       console.error("Logout error:", error);
@@ -146,9 +143,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const resetPassword = async (email: string): Promise<void> => {
+    ///
+  };
+  
+
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, token, login, logout, getUserInfo }}
+      value={{ isAuthenticated, token, login, logout, getUserInfo, resetPassword }}
     >
       {children}
     </AuthContext.Provider>

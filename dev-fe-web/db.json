@@ -1,0 +1,58 @@
+{
+  "users": [
+    {
+      "userId": "1a2b3c4d-1234-5678-9abc-def012345678",
+      "employeeId": "minhanh",
+      "email": "minhanh@example.com",
+      "firstName": "Minh Anh",
+      "lastName": "Nguyễn",
+      "phoneNumber": "0901234567",
+      "userType": "nhan_vien"
+    },
+    {
+      "userId": "2b3c4d5e-2345-6789-abcd-ef0123456789",
+      "employeeId": "quanghieu",
+      "email": "quanghieu@example.com",
+      "firstName": "Quang Hieu",
+      "lastName": "Trần",
+      "phoneNumber": "0912345678",
+      "userType": "nhan_vien"
+    },
+    {
+      "userId": "3c4d5e6f-3456-789a-bcde-f0123456789a",
+      "employeeId": "lananh",
+      "email": "lananh@example.com",
+      "firstName": "Lan Anh",
+      "lastName": "Lê",
+      "phoneNumber": "0923456789",
+      "userType": "nhan_vien"
+    },
+    {
+      "userId": "4d5e6f7g-4567-89ab-cdef-0123456789ab",
+      "employeeId": "ducminh",
+      "email": "ducminh@example.com",
+      "firstName": "Đức Minh",
+      "lastName": "Phan",
+      "phoneNumber": "0934567890",
+      "userType": "nhan_vien"
+    },
+    {
+      "userId": "5e6f7g8h-5678-9abc-def0-123456789abc",
+      "employeeId": "thithanh",
+      "email": "thithanh@example.com",
+      "firstName": "Thị Thanh",
+      "lastName": "Hoàng",
+      "phoneNumber": "0945678901",
+      "userType": "nhan_vien"
+    },
+    {
+      "userId": "6f7g8h9i-6789-abcd-ef01-23456789abcd",
+      "employeeId": "tuananh",
+      "email": "tuananh@example.com",
+      "firstName": "Tuấn Anh",
+      "lastName": "Vũ",
+      "phoneNumber": "0956789012",
+      "userType": "nhan_vien"
+    }
+  ]
+}

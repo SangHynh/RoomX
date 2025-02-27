@@ -1,12 +1,48 @@
+import { useAuth } from "@/context/AuthProvider";
 import React, { useState } from "react";
 
 const ForgotPasswordForm: React.FC = () => {
   const [email, setEmail] = useState("");
+  // const { resetPassword } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Reset link sent to:", email);
+  
+    if (!email.trim()) {
+      alert("Please enter your email.");
+      return;
+    }
+  
+    try {
+      const keycloakUrl = import.meta.env.VITE_KEYCLOAK_URL;
+      const realm = import.meta.env.VITE_KEYCLOAK_REALM;
+      const clientId = import.meta.env.VITE_KEYCLOAK_CLIENT_ID;
+  
+      const response = await fetch(
+        `${keycloakUrl}/realms/${realm}/login-actions/reset-credentials?client_id=${clientId}`,
+        {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({ username: email }),
+        }
+      );
+  
+      if (response.ok) {
+        alert("Check your email for the reset password link!");
+      } else {
+        const errorData = await response.json();
+        console.error("Error:", errorData);
+        alert(errorData.error_description || "Failed to send reset email.");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+      alert("Network error. Please try again later.");
+    }
   };
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[url('/src/assets/img/login_bg.jpg')] bg-cover bg-center dark:bg-[url('/src/assets/img/login_bg.jpg')] dark:bg-cover dark:bg-center] text-foreground">
