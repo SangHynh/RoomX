@@ -58,20 +58,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: t("menu_tong_quan"),
-            url: "#",
+            url: "/home",
           },
           {
             title: t("menu_thong_ke"),
-            url: "#",
+            url: "/statistics",
           },
-          {
-            title: t("menu_doanh_thu"),
-            url: "#",
-          },
-          {
-            title: t("menu_bao_cao"),
-            url: "#",
-          },
+          // {
+          //   title: t("menu_doanh_thu"),
+          //   url: "#",
+          // },
+          // {
+          //   title: t("menu_bao_cao"),
+          //   url: "/report",
+          // },
         ],
       },
       {
@@ -81,15 +81,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: t("menu_danh_sach_nguoi_dung"),
-            url: "#",
+            url: "/users",
           },
-          {
-            title: t("menu_cau_hinh_quyen"),
-            url: "#",
-          },
+          // {
+          //   title: t("menu_cau_hinh_quyen"),
+          //   url: "#",
+          // },
           {
             title: t("menu_quan_ly_nhom"),
-            url: "#",
+            url: "/users/groups",
           },
         ],
       },
@@ -100,7 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: t("menu_danh_sach_chi_nhanh"),
-            url: "#",
+            url: "/facilities/branches",
           },
           // {
           //   title: t("menu_danh_sach_phong_ban"),
@@ -118,12 +118,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: CalendarCheck,
         items: [
           {
-            title: t("menu_phe_duyet_cuoc_hop"),
-            url: "#",
+            title: t("menu_quan_ly_dat_phong"),
+            url: "/meetings",
           },
           {
-            title: t("menu_quan_ly_dat_phong"),
-            url: "#",
+            title: t("menu_phe_duyet_cuoc_hop"),
+            url: "/meetings/room-approvals",
           },
           {
             title: t("menu_cau_hinh_cuoc_hop"),

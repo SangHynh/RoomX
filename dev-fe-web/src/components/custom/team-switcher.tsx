@@ -38,7 +38,7 @@ export function TeamSwitcher({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="bg-transparent focus:outline-none border-none focus:border-none data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground "
+              className="bg-[var(--navitem-bg)] hover:bg-[var(--navitem-bg-hover)] shadow-md text-[var(--navitem-text)] focus:outline-none border-none focus:border-none data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground "
             >
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <activeTeam.logo className="size-4" />
@@ -74,13 +74,13 @@ export function TeamSwitcher({
                 <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
               </DropdownMenuItem>
             ))}
-            <DropdownMenuSeparator />
+            {/* <DropdownMenuSeparator />
             <DropdownMenuItem className="gap-2 p-2">
               <div className="flex size-6 items-center justify-center rounded-md border bg-background">
                 <Plus className="size-4" />
               </div>
               <div className="font-medium text-muted-foreground">Add team</div>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

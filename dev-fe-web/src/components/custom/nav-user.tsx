@@ -58,11 +58,13 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground bg-transparent border-none focus:outline-none"
+              className="bg-[var(--navitem-bg)] hover:bg-[var(--navitem-bg-hover)] text-[var(--navitem-text)] shadow-md ring-0 border-none focus:outline-none hover:brightness-110"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
+              <Avatar className="h-8 w-8 rounded-lg bg-[var(--navitem-bg)]">
                 {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
-                <AvatarFallback className="rounded-lg">{getShortName(user.name) || "AD"}</AvatarFallback>
+                <AvatarFallback className="rounded-lg ">
+                  {getShortName(user.name) || "AD"}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
@@ -81,7 +83,9 @@ export function NavUser({
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
-                  <AvatarFallback className="rounded-lg">{getShortName(user.name) || "AD"}</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {getShortName(user.name) || "AD"}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{user.name}</span>
