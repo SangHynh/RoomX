@@ -6,6 +6,7 @@ import dayGridPlugin from "@fullcalendar/daygrid"; // Plugin cho chế độ xem
 import interactionPlugin from "@fullcalendar/interaction"; // Plugin cho tương tác (chọn ngày, sự kiện)
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group";
 import listPlugin from "@fullcalendar/list";
+import "@/styles/calendar-style.css";
 
 const events = [
   // Ngày 2025-02-05 (Thứ Tư)
@@ -28,6 +29,21 @@ const events = [
     title: "Đặt phòng D",
     start: "2025-02-05T15:00:00",
     end: "2025-02-05T16:00:00",
+  },
+  {
+    title: "Đặt phòng A1",
+    start: "2025-02-06T09:00:00",
+    end: "2025-02-06T10:00:00",
+  },
+  {
+    title: "Đặt phòng B1",
+    start: "2025-02-06T11:00:00",
+    end: "2025-02-06T12:00:00",
+  },
+  {
+    title: "Đặt phòng C1",
+    start: "2025-02-06T13:00:00",
+    end: "2025-02-06T14:00:00",
   },
 
   // Ngày 2025-02-12 (Thứ Tư)
@@ -208,8 +224,11 @@ const Meeting: React.FC = () => {
           </ToggleGroupItem>
         </ToggleGroup>
         <FullCalendar
+          locale="vi"
           plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
           initialView={viewMode}
+          eventTextColor="white" // Màu chữ trắng
+          eventBackgroundColor="#ff5733" // Màu nền đỏ cam
           key={viewMode}
           events={events}
           eventClick={(info) => {
@@ -219,6 +238,9 @@ const Meeting: React.FC = () => {
             alert(`Ngày chọn: ${info.dateStr}`);
           }}
           height="100%"
+          buttonText={{
+            today: "Hôm nay" 
+          }}
         />
       </div>
     </CMSLayout>

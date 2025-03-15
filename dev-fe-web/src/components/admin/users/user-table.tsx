@@ -1,5 +1,5 @@
 import { columns } from "@/components/admin/users/column";
-import { DataTable } from "@/components/custom/data-table";
+import { DataTable } from "@/components/admin/custom/data-table";
 import React from "react";
 
 interface UserTableProps {

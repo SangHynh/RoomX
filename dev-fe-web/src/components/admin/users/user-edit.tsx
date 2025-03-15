@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogClose } from "@/components/ui/dialog";
-import { UserService } from "@/services/admin/user.service"; // import UserService
+import { UserService } from "@/services/admin/user.service";
 import { toast } from "sonner";
 
 export interface User {
@@ -11,71 +11,77 @@ export interface User {
   password: string;
   gender: string;
   email: string;
-  type: "EMPLOYEE" | "APPROVER"; 
-  roles: string[]; 
+  type: "EMPLOYEE" | "APPROVER";
+  roles: string[];
 }
 
-interface UserAddModalProps {
-  onAddSuccess: () => void; 
+interface UserEditModalProps {
+  user: User | null;
+  onEditSuccess: () => void;
 }
 
-const UserAddModal: React.FC<UserAddModalProps> = ({ onAddSuccess }) => {
+const UserEditModal: React.FC<UserEditModalProps> = ({ user, onEditSuccess }) => {
   const [employeeId, setEmployeeId] = useState("");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [userType, setUserType] = useState("employee");
-  const [isDialogOpen, setIsDialogOpen] = useState(false); 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const userService = new UserService();
+
+  // Cập nhật state khi user thay đổi
+  useEffect(() => {
+    if (user) {
+      setEmployeeId(user.userCode);
+      setEmail(user.email);
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+      setPhoneNumber(user.phoneNumber);
+      setUserType(user.type === "EMPLOYEE" ? "employee" : "approver");
+      setIsDialogOpen(true);
+    }
+  }, [user]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Đảm bảo tất cả các trường hợp nhập là hợp lệ trước khi gửi yêu cầu
     if (!employeeId || !email || !firstName || !lastName || !phoneNumber || !userType) {
-      alert("Please fill all fields.");
+      toast.error("Vui lòng điền đầy đủ thông tin.");
       return;
     }
 
-    // Tạo một đối tượng người dùng từ form
-    const newUser: User = {
+    const updatedUser: User = {
       userCode: employeeId,
       firstName: firstName,
       lastName: lastName,
       phoneNumber: phoneNumber,
-      password: "defaultpassword123", 
-      gender: "true", 
+      password: user?.password || "defaultpassword123",
+      gender: user?.gender || "true",
       email: email,
       type: userType === "employee" ? "EMPLOYEE" : "APPROVER",
       roles: userType === "employee" ? ["USER"] : ["USER", "APPROVER"]
     };
 
     try {
-      await userService.createUser(newUser);
-      toast.success("Tạo người dùng thành công!", {
-        description: <strong>Người dùng {firstName} {lastName} đã được thêm.</strong>,
-      });      
-      setIsDialogOpen(false); 
-      onAddSuccess();
+    //   await userService.updateUser(updatedUser);
+      toast.success("Cập nhật thành công!", {
+        description: <strong>Thông tin của {firstName} {lastName} đã được cập nhật.</strong>,
+      });
+      setIsDialogOpen(false);
+      onEditSuccess();
     } catch (error) {
-      console.error("Error creating user:", error);
-      alert("Error creating user.");
+      console.error("Lỗi cập nhật người dùng:", error);
+      toast.error("Cập nhật thất bại.");
     }
   };
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger asChild>
-        <button className="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
-          Thêm người dùng
-        </button>
-      </DialogTrigger>
-
       <DialogContent className="p-6 bg-white rounded-lg shadow-lg max-w-lg mx-auto">
-        <DialogTitle className="text-xl font-semibold mb-4">Tạo người dùng mới</DialogTitle>
-        <DialogDescription className="text-sm mb-6">Điền đầy đủ các thông tin bên dưới</DialogDescription>
+        <DialogTitle className="text-xl font-semibold mb-4">Chỉnh sửa người dùng</DialogTitle>
+        <DialogDescription className="text-sm mb-6">Cập nhật thông tin người dùng</DialogDescription>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
           <div className="col-span-1">
@@ -84,8 +90,8 @@ const UserAddModal: React.FC<UserAddModalProps> = ({ onAddSuccess }) => {
               type="text"
               value={employeeId}
               onChange={(e) => setEmployeeId(e.target.value)}
-              className="w-full p-2 bg-transparent border border-gray-300 rounded-md"
-              placeholder="Nhập mã nhân viên"
+              className="w-full p-2 bg-gray-100 border border-gray-300 rounded-md"
+              readOnly
             />
           </div>
 
@@ -96,7 +102,6 @@ const UserAddModal: React.FC<UserAddModalProps> = ({ onAddSuccess }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full p-2 bg-transparent border border-gray-300 rounded-md"
-              placeholder="Nhập email"
             />
           </div>
 
@@ -107,7 +112,6 @@ const UserAddModal: React.FC<UserAddModalProps> = ({ onAddSuccess }) => {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               className="w-full p-2 bg-transparent border border-gray-300 rounded-md"
-              placeholder="Nhập họ"
             />
           </div>
 
@@ -118,7 +122,6 @@ const UserAddModal: React.FC<UserAddModalProps> = ({ onAddSuccess }) => {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               className="w-full p-2 bg-transparent border border-gray-300 rounded-md"
-              placeholder="Nhập tên"
             />
           </div>
 
@@ -129,7 +132,6 @@ const UserAddModal: React.FC<UserAddModalProps> = ({ onAddSuccess }) => {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               className="w-full p-2 bg-transparent border border-gray-300 rounded-md"
-              placeholder="Nhập số điện thoại"
             />
           </div>
 
@@ -159,7 +161,7 @@ const UserAddModal: React.FC<UserAddModalProps> = ({ onAddSuccess }) => {
               type="submit"
               className="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
             >
-              Thêm người dùng
+              Lưu thay đổi
             </button>
           </div>
         </form>
@@ -168,4 +170,4 @@ const UserAddModal: React.FC<UserAddModalProps> = ({ onAddSuccess }) => {
   );
 };
 
-export default UserAddModal;
+export default UserEditModal;

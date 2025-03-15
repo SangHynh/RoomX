@@ -1,0 +1,105 @@
+/* Đổi màu chữ số ngày */
+.fc-daygrid-day-number {
+  color: var(--foreground) !important;
+  font-weight: 600;
+  font-size: 14px;
+  margin-left: 8px; /* Đẩy số vào trong hơn */
+  margin-top: 8px; /* Hạ số xuống để không bị che */
+  padding: 2px 5px; /* Tạo khoảng cách an toàn */
+  position: relative; /* Đảm bảo không bị lệch do flex/grid */
+  z-index: 2; /* Đảm bảo nó luôn hiển thị rõ ràng */
+  right: 10px; 
+}
+
+/* Khi di chuột vào số ngày */
+.fc-daygrid-day-number:hover {
+  color: #e63946 !important; /* Màu đỏ nhạt nổi bật */
+  transform: scale(1.1);
+}
+
+/* Đổi màu tiêu đề của các ngày trong tuần */
+.fc-col-header-cell-cushion {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 8px 0;
+  text-transform: uppercase;
+}
+
+/* Màu sắc cho từng ngày trong tuần */
+.fc-col-header-cell:nth-child(1) .fc-col-header-cell-cushion {
+  color: #e63946 !important; /* Chủ Nhật - Đỏ */
+}
+
+.fc-col-header-cell:nth-child(2) .fc-col-header-cell-cushion {
+  color: #457b9d !important; /* Thứ 2 - Xanh dương nhạt */
+}
+
+.fc-col-header-cell:nth-child(3) .fc-col-header-cell-cushion {
+  color: #2a9d8f !important; /* Thứ 3 - Xanh ngọc */
+}
+
+.fc-col-header-cell:nth-child(4) .fc-col-header-cell-cushion {
+  color: #f4a261 !important; /* Thứ 4 - Cam */
+}
+
+.fc-col-header-cell:nth-child(5) .fc-col-header-cell-cushion {
+  color: #e76f51 !important; /* Thứ 5 - Cam đất */
+}
+
+.fc-col-header-cell:nth-child(6) .fc-col-header-cell-cushion {
+  color: #6a0572 !important; /* Thứ 6 - Tím */
+}
+
+.fc-col-header-cell:nth-child(7) .fc-col-header-cell-cushion {
+  color: #118ab2 !important; /* Thứ 7 - Xanh biển */
+}
+
+/* Làm nổi bật ngày hiện tại */
+.fc-day-today {
+  background: rgba(230, 57, 70, 0.2) !important;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s ease-in-out;
+}
+
+/* Bo góc cho từng ô ngày */
+.fc-daygrid-day {
+  border-radius: 6px;
+  transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/* Khi di chuột vào ô ngày */
+.fc-daygrid-day:hover {
+  background: rgba(69, 123, 157, 0.1);
+  transform: scale(1.02);
+}
+
+/* Làm nổi bật sự kiện */
+.fc-event {
+  border-radius: 6px !important;
+  padding: 5px;
+  font-weight: 500;
+  transition: transform 0.2s ease-in-out;
+}
+
+.fc-event:hover {
+  transform: scale(1.05);
+}
+
+/* Tuỳ chỉnh nút Today */
+.fc-today-button {
+  background-color: #e63946 !important;
+  color: white !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
+  font-weight: bold !important;
+  transition: background 0.3s ease-in-out;
+}
+
+.fc-today-button:hover {
+  background-color: #d62828 !important;
+}
+
+.fc-daygrid-body {
+  padding-right: 16px !important; 
+}

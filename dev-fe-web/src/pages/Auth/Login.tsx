@@ -1,5 +1,5 @@
-import { LanguageSelect } from "@/components/custom/select-language";
-import { ThemeToggle } from "@/components/custom/theme-toggle";
+import { LanguageSelect } from "@/components/admin/custom/select-language";
+import { ThemeToggle } from "@/components/admin/custom/theme-toggle";
 import LoginForm from "@/components/login/login-form";
 import { useTranslation } from "react-i18next";
 

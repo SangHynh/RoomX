@@ -1,5 +1,15 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, Eye, XCircle } from "lucide-react";
+import { Edit, Eye, MoreHorizontal, XCircle } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export type Branch = {
   branchId: string;
@@ -11,8 +21,13 @@ export type Branch = {
 
 export const columns: ColumnDef<Branch>[] = [
   {
+    id: "stt",
+    header: "STT",
+    cell: ({ row }) => row.index + 1,
+  },
+  {
     accessorKey: "name",
-    header: "Branch Name",
+    header: "Chi nhánh",
   },
   {
     accessorKey: "email",
@@ -20,41 +35,45 @@ export const columns: ColumnDef<Branch>[] = [
   },
   {
     accessorKey: "phoneNumber",
-    header: "Phone Number",
+    header: "Số điện thoại",
   },
   {
     accessorKey: "address",
-    header: "Address",
+    header: "Địa chỉ",
   },
   {
     id: "actions",
-    header: "Actions",
-    cell: ({ row }) => (
-      <div className="flex gap-3">
-        {/* Xem chi tiết */}
-        <span 
-          onClick={() => console.log("Xem chi tiết", row.original.branchId)} 
-          className="cursor-pointer text-blue-500"
-        >
-          <Eye size={18} />
-        </span>
-
-        {/* Cập nhật */}
-        <span 
-          onClick={() => console.log("Cập nhật", row.original.branchId)} 
-          className="cursor-pointer text-green-500"
-        >
-          <Edit size={18} />
-        </span>
-
-        {/* Vô hiệu hoá */}
-        <span 
-          onClick={() => console.log("Vô hiệu hoá", row.original.branchId)} 
-          className="cursor-pointer text-red-500"
-        >
-          <XCircle size={18} />
-        </span>
-      </div>
-    ),
+    cell: ({ row }) => {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0 bg-transparent">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Hành động</DropdownMenuLabel>
+            {/* <DropdownMenuItem>
+              <Link to={`/admin/branchs/${row.original.branchId}`}>
+                Xem chi tiết
+              </Link>
+            </DropdownMenuItem> */}
+            <DropdownMenuItem>
+              <Link to={`/admin/branches/edit/${row.original.branchId}`}>
+                Cập nhật
+              </Link>{" "}
+            </DropdownMenuItem>
+            {/* <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+              }}
+            >
+              <DisableBranchDialog triggerText="Vô hiệu hoá" />
+            </DropdownMenuItem> */}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
   },
 ];

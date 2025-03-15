@@ -1,66 +1,87 @@
+import DisableUserDialog from "@/components/admin/users/user-disable";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { User } from "@/types/UserType";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreVertical, Edit, Eye, XCircle } from "lucide-react"; // Import icon từ lucide-react
-
-
+import { MoreVertical, Edit, Eye, XCircle, MoreHorizontal } from "lucide-react"; // Import icon từ lucide-react
+import { Link } from "react-router-dom";
 
 export const columns: ColumnDef<User>[] = [
   {
-    accessorKey: "user_code",
-    header: "Employee ID",
+    id: "stt",
+    header: "STT",
+    cell: ({ row }) => row.index + 1,
+  },
+  {
+    accessorKey: "userCode",
+    header: "Mã nhân viên",
   },
   {
     accessorKey: "email",
     header: "Email",
   },
   {
-    accessorKey: "first_name",
-    header: "First Name",
-    cell: ({ row }) => row.original.first_name || "N/A",
+    accessorKey: "firstName",
+    header: "Họ",
+    cell: ({ row }) => row.original.firstName || "N/A",
   },
   {
-    accessorKey: "last_name",
-    header: "Last Name",
-    cell: ({ row }) => row.original.last_name || "N/A",
+    accessorKey: "lastName",
+    header: "Tên",
+    cell: ({ row }) => row.original.lastName || "N/A",
   },
   {
-    accessorKey: "phone_number",
-    header: "Phone Number",
-    cell: ({ row }) => row.original.phone_number || "N/A",
+    accessorKey: "phoneNumber",
+    header: "Số điện thoại",
+    cell: ({ row }) => row.original.phoneNumber || "N/A",
   },
   {
-    accessorKey: "user_type",
-    header: "User Type",
+    accessorKey: "userType",
+    header: "Loại người dùng",
   },
   {
     id: "actions",
-    header: "Actions",
-    cell: ({ row }) => (
-      <div className="flex gap-3">
-        {/* Xem chi tiết */}
-        <span 
-          onClick={() => console.log("Xem chi tiết", row.original.user_id)} 
-          className="cursor-pointer text-blue-500"
-        >
-          <Eye size={18} />
-        </span>
-
-        {/* Cập nhật */}
-        <span 
-          onClick={() => console.log("Cập nhật", row.original.user_id)} 
-          className="cursor-pointer text-green-500"
-        >
-          <Edit size={18} />
-        </span>
-
-        {/* Vô hiệu hoá */}
-        <span 
-          onClick={() => console.log("Vô hiệu hoá", row.original.user_id)} 
-          className="cursor-pointer text-red-500"
-        >
-          <XCircle size={18} />
-        </span>
-      </div>
-    ),
+    cell: ({ row }) => {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0 bg-transparent">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Hành động</DropdownMenuLabel>
+            <DropdownMenuItem>
+              <Link to={`/admin/users/${row.original.userId}`}>
+                Xem chi tiết
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+              }}
+            >
+              Cập nhật
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+              }}
+            >
+              <DisableUserDialog triggerText="Vô hiệu hoá" />
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
   },
 ];

@@ -1,5 +1,5 @@
-import { AppSidebar } from "@/components/custom/app-sidebar";
-import CMSHeader from "@/components/custom/cms-header";
+import { AppSidebar } from "@/components/admin/custom/app-sidebar";
+import CMSHeader from "@/components/admin/custom/cms-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 interface CMSLayoutProps {
   children: React.ReactNode;

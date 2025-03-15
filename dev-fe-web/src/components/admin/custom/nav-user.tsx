@@ -28,8 +28,8 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/context/AuthProvider";
 import { useCallback } from "react";
-import { ThemeToggle } from "@/components/custom/theme-toggle";
-import { LanguageSelect } from "@/components/custom/select-language";
+import { ThemeToggle } from "@/components/admin/custom/theme-toggle";
+import { LanguageSelect } from "@/components/admin/custom/select-language";
 import { getShortName } from "@/utils/string.util";
 
 export function NavUser({

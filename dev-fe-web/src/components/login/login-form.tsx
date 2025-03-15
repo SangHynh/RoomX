@@ -18,7 +18,7 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       await login(username, password);
-      window.location.href = "/home";
+      window.location.href = "/admin/home";
     } catch (error) {
       console.error("Login failed", error);
     }

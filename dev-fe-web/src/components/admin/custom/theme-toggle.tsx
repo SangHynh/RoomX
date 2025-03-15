@@ -1,5 +1,5 @@
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "@/components/custom/theme-provider";
+import { useTheme } from "@/components/admin/custom/theme-provider";
 
 interface ThemeToggleProps {
   variant?: "icon" | "switch"; // Kiểu hiển thị

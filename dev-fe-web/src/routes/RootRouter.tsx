@@ -2,45 +2,56 @@ import ForgotPassword from "@/pages/Auth/ForgotPassword";
 import Notfound from "@/pages/Error/Notfound";
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "@/routes/ProtectedRouter";
-import Dashboard from "@/pages/Dashboard/Dashboard";
+import Dashboard from "@/pages/Admin/Dashboard";
 import Login from "@/pages/Auth/Login";
-import User from "@/pages/Dashboard/User";
-import Meeting from "@/pages/Dashboard/Meeting";
-import Branch from "@/pages/Dashboard/Branch";
-import GroupUser from "@/pages/Dashboard/GroupUser";
-import MeetingApproval from "@/pages/Dashboard/MeetingApproval";
-import Statistics from "@/pages/Dashboard/Statistics";
+import User from "@/pages/Admin/User";
+import Meeting from "@/pages/Admin/Meeting";
+import Branch from "@/pages/Admin/Branch/Branch";
+import GroupUser from "@/pages/Admin/GroupUser";
+import MeetingApproval from "@/pages/Admin/MeetingApproval";
+import Statistics from "@/pages/Admin/Statistics";
+import Home from "@/pages/App/Home";
+import UserDetail from "@/pages/Admin/UserDetail";
+import BranchUpdate from "@/pages/Admin/Branch/BranchUpdate";
 
 export const RootRouter = createBrowserRouter([
   {
     element: <ProtectedRoute />,
     children: [
       {
-        path: "/home",
+        path: "/admin/home",
         element: <Dashboard />,
       },
       {
-        path: "/statistics",
+        path: "/admin/statistics",
         element: <Statistics />,
       },
       {
-        path: "/users",
+        path: "/admin/users",
         element: <User />,
       },
       {
-        path: "/meetings",
+        path: "/admin/users/:userId",
+        element: <UserDetail />,
+      },
+      {
+        path: "/admin/meetings",
         element: <Meeting />,
       },
       {
-        path: "/meetings/room-approvals",
+        path: "/admin/meetings/room-approvals",
         element: <MeetingApproval />,
       },
       {
-        path: "/facilities/branches",
+        path: "/admin/branches",
         element: <Branch />,
       },
       {
-        path: "/users/groups",
+        path: "/admin/branches/edit/:branchId",
+        element: <BranchUpdate />,
+      },
+      {
+        path: "/admin/users/groups",
         element: <GroupUser />,
       }
     ],
@@ -57,4 +68,8 @@ export const RootRouter = createBrowserRouter([
     path: "*",
     element: <Notfound />,
   },
+  {
+    path: "/portal/home",
+    element: <Home/>
+  }
 ]);

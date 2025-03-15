@@ -14,15 +14,15 @@ import {
   Users,
 } from "lucide-react";
 
-import { NavMain } from "@/components/custom/nav-main";
-import { TeamSwitcher } from "@/components/custom/team-switcher";
+import { NavMain } from "@/components/admin/custom/nav-main";
+import { TeamSwitcher } from "@/components/admin/custom/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
-import { NavUser } from "@/components/custom/nav-user";
+import { NavUser } from "@/components/admin/custom/nav-user";
 import { useAuth } from "@/context/AuthProvider";
 import { useTranslation } from "react-i18next";
 
@@ -58,11 +58,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: t("menu_tong_quan"),
-            url: "/home",
+            url: "/admin/home",
           },
           {
             title: t("menu_thong_ke"),
-            url: "/statistics",
+            url: "/admin/statistics",
           },
           // {
           //   title: t("menu_doanh_thu"),
@@ -81,7 +81,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: t("menu_danh_sach_nguoi_dung"),
-            url: "/users",
+            url: "/admin/users",
           },
           // {
           //   title: t("menu_cau_hinh_quyen"),
@@ -89,7 +89,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           // },
           {
             title: t("menu_quan_ly_nhom"),
-            url: "/users/groups",
+            url: "/admin/users/groups",
           },
         ],
       },
@@ -100,7 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: t("menu_danh_sach_chi_nhanh"),
-            url: "/facilities/branches",
+            url: "/admin/branches",
           },
           // {
           //   title: t("menu_danh_sach_phong_ban"),
@@ -119,11 +119,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: t("menu_quan_ly_dat_phong"),
-            url: "/meetings",
+            url: "/admin/meetings",
           },
           {
             title: t("menu_phe_duyet_cuoc_hop"),
-            url: "/meetings/room-approvals",
+            url: "/admin/meetings/room-approvals",
           },
           {
             title: t("menu_cau_hinh_cuoc_hop"),

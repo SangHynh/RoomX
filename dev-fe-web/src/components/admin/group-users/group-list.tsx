@@ -5,7 +5,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 // import GroupUserItem from "./group-user-item"; // Component hiển thị thông tin 1 nhóm
-import { DataTable } from "@/components/custom/data-table";
+import { DataTable } from "@/components/admin/custom/data-table";
 import { columns } from "./column"; // Các cột hiển thị trong table
 
 export type GroupUser = {

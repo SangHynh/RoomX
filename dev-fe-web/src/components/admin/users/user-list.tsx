@@ -12,20 +12,10 @@ import {
 } from "@/components/ui/select";
 import UserItem from "./user-item";
 import UserAddModal from "./user-add";
-import { UserService } from "@/services/user.service";
-import UserTable from "@/components/admin/users/user-table";
+import { UserService } from "@/services/admin/user.service";
 import { columns } from "@/components/admin/users/column";
-import { DataTable } from "@/components/custom/data-table";
-
-export type User = {
-  user_id: string;
-  user_code: string;
-  email: string;
-  first_name: string | null;
-  last_name: string | null;
-  phone_number: string | null;
-  user_type: string;
-};
+import { DataTable } from "@/components/admin/custom/data-table";
+import { User } from "@/types/UserType";
 
 const UserList: React.FC = () => {
   const [viewMode, setViewMode] = useState<"table" | "card">("table");
@@ -38,47 +28,56 @@ const UserList: React.FC = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      setLoading(true);
-      try {
-        const userService = new UserService();
-        const data = await userService.getListUsers(pageIndex, 10);
-        console.log(data.content);
-        console.log(data.total_pages);
-        setUsers(data.content || []);
-        setTotalPages(data.total_pages);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-      setLoading(false);
-    };
+  // Hàm fetch dữ liệu người dùng
+  const fetchUsers = async () => {
+    setLoading(true);
+    try {
+      const userService = new UserService();
+      const data = await userService.getListUsers(pageIndex, 10);
+      console.log(data);
+      setUsers(data.content || []);
+      setTotalPages(data.totalPages);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+    setLoading(false);
+  };
 
+  // Hàm gọi khi thêm người dùng thành công
+  const onAddSuccess = async () => {
+    // Kiểm tra xem người dùng có phải là người dùng cuối cùng của trang không
+    if (users.length >= 10) {
+      setPageIndex(pageIndex + 1);
+    } else {
+      await fetchUsers();
+    }
+  };
+
+  // Hàm gọi khi chỉnh sửa người dùng thành công
+  const onEditSuccess = async () => {
+    await fetchUsers();
+  };
+
+  useEffect(() => {
     fetchUsers();
   }, [pageIndex]);
 
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
-      user.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.user_code.toLowerCase().includes(searchTerm.toLowerCase());
-
-    const matchesFilter = filterType === "all" || user.user_type === filterType;
-
+      user.userCode.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesFilter = filterType === "all" || user.userType === filterType;
     return matchesSearch && matchesFilter;
   });
-
-  const handleAddUser = (newUser: User) => {
-    console.log("New User Added:", newUser);
-  };
 
   return (
     <div className="flex-1">
       {/* Thanh tìm kiếm, bộ lọc và nút Thêm */}
       <div className="mb-4 flex flex-col md:flex-row gap-4 items-center">
         <Input
-          placeholder="Search by name, email, ID..."
+          placeholder="Tìm kiếm theo tên, email, mã nhân viên..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full md:w-1/3"
@@ -92,7 +91,7 @@ const UserList: React.FC = () => {
             <SelectValue placeholder="Filter by role" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All</SelectItem>
+            <SelectItem value="all">Tất cả</SelectItem>
             <SelectItem value="nhan_vien">Nhân Viên</SelectItem>
             <SelectItem value="apporver">Kiểm duyệt viên</SelectItem>
           </SelectContent>
@@ -104,12 +103,12 @@ const UserList: React.FC = () => {
             value && setViewMode(value as "table" | "card")
           }
         >
-          <ToggleGroupItem value="table">Table</ToggleGroupItem>
-          <ToggleGroupItem value="card">Card</ToggleGroupItem>
+          <ToggleGroupItem value="table">Bảng</ToggleGroupItem>
+          <ToggleGroupItem value="card">Thẻ</ToggleGroupItem>
         </ToggleGroup>
 
         {/* Nút Thêm User */}
-        <UserAddModal onAddUser={handleAddUser} />
+        <UserAddModal onAddSuccess={onAddSuccess} />
       </div>
 
       {viewMode === "table" ? (
@@ -130,7 +129,7 @@ const UserList: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
           {filteredUsers.map((user) => (
-            <UserItem key={user.user_id} user={user} />
+            <UserItem key={user.userId} user={user} />
           ))}
         </div>
       )}
