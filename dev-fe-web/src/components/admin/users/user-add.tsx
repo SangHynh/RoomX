@@ -45,7 +45,7 @@ const UserAddModal: React.FC<UserAddModalProps> = ({ onAddSuccess }) => {
       firstName: firstName,
       lastName: lastName,
       phoneNumber: phoneNumber,
-      password: "defaultpassword123", 
+      password: "password123", 
       gender: "true", 
       email: email,
       type: userType === "employee" ? "EMPLOYEE" : "APPROVER",
