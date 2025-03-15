@@ -113,6 +113,25 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ],
       },
       {
+        title: t("menu_quan_ly_tai_nguyen"),
+        url: "#",
+        icon: Package,
+        items: [
+          {
+            title: t("menu_danh_sach_phong_hop"),
+            url: "/admin/rooms",
+          },
+          {
+            title: t("menu_danh_sach_thiet_bi"),
+            url: "/admin/equipments",
+          },
+          {
+            title: t("menu_cau_hinh_dich_vu"),
+            url: "/admin/services",
+          },
+        ],
+      },
+      {
         title: t("menu_quan_ly_cuoc_hop"),
         url: "#",
         icon: CalendarCheck,
@@ -135,25 +154,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           },
           {
             title: t("menu_phan_hoi_nhanh"),
-            url: "#",
-          },
-        ],
-      },
-      {
-        title: t("menu_quan_ly_tai_nguyen"),
-        url: "#",
-        icon: Package,
-        items: [
-          {
-            title: t("menu_danh_sach_phong_hop"),
-            url: "#",
-          },
-          {
-            title: t("menu_danh_sach_thiet_bi"),
-            url: "#",
-          },
-          {
-            title: t("menu_cau_hinh_dich_vu"),
             url: "#",
           },
         ],

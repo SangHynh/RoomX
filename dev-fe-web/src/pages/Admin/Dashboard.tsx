@@ -6,34 +6,34 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recha
 import CMSLayout from "@/layouts/cms-layout";
 
 const stats = [
-  { title: "Total Rooms", value: 15, icon: <Calendar className="w-6 h-6" /> },
-  { title: "Bookings Today", value: 8, icon: <CheckCircle className="w-6 h-6" /> },
-  { title: "Total Users", value: 200, icon: <Users className="w-6 h-6" /> },
-  { title: "Total Revenue", value: "$12,500", icon: <DollarSign className="w-6 h-6" /> },
+  { title: "Số phòng", value: 15, icon: <Calendar className="w-6 h-6" /> },
+  { title: "Lượt đặt hôm nay", value: 8, icon: <CheckCircle className="w-6 h-6" /> },
+  { title: "Người dùng", value: 200, icon: <Users className="w-6 h-6" /> },
+  { title: "Tổng doanh thu", value: "$12,500", icon: <DollarSign className="w-6 h-6" /> },
 ];
 
 const bookings = [
-  { id: 1, room: "Conference Room A", user: "John Doe", time: "10:00 AM - 11:00 AM", status: "Confirmed" },
-  { id: 2, room: "Meeting Room B", user: "Jane Smith", time: "2:00 PM - 3:00 PM", status: "Pending" },
-  { id: 3, room: "Boardroom C", user: "Mike Johnson", time: "4:00 PM - 5:00 PM", status: "Cancelled" },
+  { id: 1, room: "Phòng hội nghị A", user: "John Doe", time: "10:00 - 11:00", status: "Đã xác nhận" },
+  { id: 2, room: "Phòng họp B", user: "Jane Smith", time: "14:00 - 15:00", status: "Chờ xử lý" },
+  { id: 3, room: "Phòng họp C", user: "Mike Johnson", time: "16:00 - 17:00", status: "Đã hủy" },
 ];
 
 const bookingChartData = [
-  { name: "Jan", bookings: 30 },
-  { name: "Feb", bookings: 45 },
-  { name: "Mar", bookings: 60 },
-  { name: "Apr", bookings: 50 },
-  { name: "May", bookings: 70 },
-  { name: "Jun", bookings: 90 },
+  { name: "Tháng 1", bookings: 30 },
+  { name: "Tháng 2", bookings: 45 },
+  { name: "Tháng 3", bookings: 60 },
+  { name: "Tháng 4", bookings: 50 },
+  { name: "Tháng 5", bookings: 70 },
+  { name: "Tháng 6", bookings: 90 },
 ];
 
 const revenueChartData = [
-  { name: "Jan", revenue: 3000 },
-  { name: "Feb", revenue: 4500 },
-  { name: "Mar", revenue: 6000 },
-  { name: "Apr", revenue: 5000 },
-  { name: "May", revenue: 7000 },
-  { name: "Jun", revenue: 9000 },
+  { name: "Tháng 1", revenue: 3000 },
+  { name: "Tháng 2", revenue: 4500 },
+  { name: "Tháng 3", revenue: 6000 },
+  { name: "Tháng 4", revenue: 5000 },
+  { name: "Tháng 5", revenue: 7000 },
+  { name: "Tháng 6", revenue: 9000 },
 ];
 
 const Dashboard: React.FC = () => {
@@ -52,20 +52,21 @@ const Dashboard: React.FC = () => {
             </Card>
           ))}
         </div>
+
         <Card className="shadow-lg">
           <CardHeader>
-            <CardTitle>Recent Bookings</CardTitle>
+            <CardTitle>Đặt phòng gần đây</CardTitle>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>ID</TableHead>
-                  <TableHead>Room</TableHead>
-                  <TableHead>User</TableHead>
-                  <TableHead>Time</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Actions</TableHead>
+                  <TableHead>Phòng</TableHead>
+                  <TableHead>Người dùng</TableHead>
+                  <TableHead>Thời gian</TableHead>
+                  <TableHead>Trạng thái</TableHead>
+                  <TableHead>Hành động</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -77,7 +78,7 @@ const Dashboard: React.FC = () => {
                     <TableCell>{booking.time}</TableCell>
                     <TableCell>{booking.status}</TableCell>
                     <TableCell>
-                      <Button size="sm" variant="outline">Manage</Button>
+                      <Button size="sm" variant="outline">Quản lý</Button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -85,10 +86,10 @@ const Dashboard: React.FC = () => {
             </Table>
           </CardContent>
         </Card>
-        
+
         <Card className="shadow-lg">
           <CardHeader>
-            <CardTitle>Booking Statistics</CardTitle>
+            <CardTitle>Thống kê đặt phòng</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -104,7 +105,7 @@ const Dashboard: React.FC = () => {
 
         <Card className="shadow-lg">
           <CardHeader>
-            <CardTitle>Revenue Statistics</CardTitle>
+            <CardTitle>Thống kê doanh thu</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -117,8 +118,6 @@ const Dashboard: React.FC = () => {
             </ResponsiveContainer>
           </CardContent>
         </Card>
-
-        
       </div>
     </CMSLayout>
   );
