@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BranchService } from "@/services/admin/branch.service";
 import { toast } from "sonner";
+import CopyableInput from "@/components/admin/custom/copyable-input";
 
 const BranchUpdate: React.FC = () => {
   const { branchId } = useParams(); // Lấy id từ URL
@@ -15,6 +16,8 @@ const BranchUpdate: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   // State để quản lý form
+  const [id, setId] = useState("");
+  const [branchCode, setBranchCode] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -27,7 +30,9 @@ const BranchUpdate: React.FC = () => {
         const service = new BranchService();
         const data = await service.getDetailBranch(branchId);
         const branchData = data.content[0];
+        setId(branchData.id);
         setBranch(branchData);
+        setBranchCode(branchData.branchCode || "");
         setName(branchData.name || "");
         setEmail(branchData.email || "");
         setPhoneNumber(branchData.phoneNumber || "");
@@ -41,6 +46,20 @@ const BranchUpdate: React.FC = () => {
 
     fetchBranch();
   }, [branchId]);
+
+  const handleUpdate = async () => {
+    if (!branchId) return;
+
+    const updatedData = { name, email, phoneNumber, address };
+
+    try {
+      const service = new BranchService();
+      await service.updateBranch(id, updatedData);
+      toast.success("Cập nhật chi nhánh thành công!");
+    } catch (error) {
+      toast.error("Có lỗi xảy ra khi cập nhật.");
+    }
+  };
 
   if (loading)
     return (
@@ -59,13 +78,16 @@ const BranchUpdate: React.FC = () => {
           <CardContent>
             <div className="space-y-4">
               <div>
-                <Label htmlFor="id">ID</Label>
-                <Input id="id" value={branch?.id} disabled />
+                <CopyableInput id="id" label="ID" value={branch?.id || ""} />
               </div>
 
               <div>
                 <Label htmlFor="branchCode">Mã Chi Nhánh</Label>
-                <Input id="branchCode" value={branch?.branchCode} />
+                <Input
+                  id="branchCode"
+                  value={branchCode}
+                  onChange={(e) => setBranchCode(e.target.value)}
+                />
               </div>
 
               <div>
@@ -105,7 +127,9 @@ const BranchUpdate: React.FC = () => {
                 />
               </div>
 
-              <Button className="w-full">Cập Nhật</Button>
+              <Button className="w-full" onClick={handleUpdate}>
+                Cập Nhật
+              </Button>
             </div>
           </CardContent>
         </Card>

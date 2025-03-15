@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 export type Branch = {
-  branchId: string;
+  branchCode: string;
   name: string;
   email: string;
   phoneNumber: string;
@@ -24,6 +24,10 @@ export const columns: ColumnDef<Branch>[] = [
     id: "stt",
     header: "STT",
     cell: ({ row }) => row.index + 1,
+  },
+  {
+    accessorKey: "branchCode",
+    header: "Mã chi nhánh",
   },
   {
     accessorKey: "name",
@@ -59,7 +63,7 @@ export const columns: ColumnDef<Branch>[] = [
               </Link>
             </DropdownMenuItem> */}
             <DropdownMenuItem>
-              <Link to={`/admin/branches/edit/${row.original.branchId}`}>
+              <Link to={`/admin/branches/edit/${row.original.branchCode}`}>
                 Cập nhật
               </Link>{" "}
             </DropdownMenuItem>

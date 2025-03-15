@@ -6,9 +6,12 @@ import { Input } from "@/components/ui/input";
 import { DataTable } from "@/components/admin/custom/data-table";
 import { columns } from "./column";
 import { BranchService } from "@/services/admin/branch.service";
+import UserAddModal from "@/components/admin/users/user-add";
+import BranchAddModal from "@/components/admin/branches/branch-add";
 
 export type Branch = {
   branchId: string;
+  branchCode: string;
   name: string;
   phoneNumber: string;
   email: string;
@@ -24,31 +27,42 @@ const BranchList: React.FC = () => {
   const [totalPages, setTotalPages] = useState(1);
   const pageSize = 10; // Số lượng chi nhánh trên mỗi trang
 
+
+  const fetchBranches = async () => {
+    setLoading(true);
+    try {
+      const branchService = new BranchService();
+      const data = await branchService.getListBranches(pageIndex + 1);
+      console.log(data);
+      setBranches(
+        data.content.map((branch: any) => ({
+          branchId: branch.id,
+          branchCode: branch.branchCode,
+          name: branch.name,
+          phoneNumber: branch.phoneNumber,
+          email: branch.email,
+          address: branch.address,
+        }))
+      );
+
+      setTotalPages(data.pagination.totalPages || 1);
+    } catch (error) {
+      console.error("Failed to fetch branches:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onAddSuccess = async () => {
+    // Kiểm tra xem người dùng có phải là người dùng cuối cùng của trang không
+    if (branches.length >= 10) {
+      setPageIndex(pageIndex + 1);
+    } else {
+      await fetchBranches();
+    }
+  };
+
   useEffect(() => {
-    const fetchBranches = async () => {
-      setLoading(true);
-      try {
-        const branchService = new BranchService();
-        const data = await branchService.getListBranches(pageIndex + 1);
-        console.log(data)
-        setBranches(
-          data.content.map((branch: any) => ({
-            branchId: branch.id,
-            name: branch.name,
-            phoneNumber: branch.phoneNumber,
-            email: branch.email,
-            address: branch.address,
-          }))
-        );
-
-        setTotalPages(data.pagination.totalPages || 1);
-      } catch (error) {
-        console.error("Failed to fetch branches:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchBranches();
   }, [pageIndex]);
 
@@ -57,7 +71,7 @@ const BranchList: React.FC = () => {
       {/* Thanh tìm kiếm */}
       <div className="mb-4 flex flex-col md:flex-row gap-4 items-center">
         <Input
-          placeholder="Search by name, email, phone, address..."
+          placeholder="Tìm kiếm..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full md:w-1/3"
@@ -69,6 +83,7 @@ const BranchList: React.FC = () => {
         >
           <ToggleGroupItem value="table">Bảng</ToggleGroupItem>
         </ToggleGroup>
+        <BranchAddModal onAddSuccess={onAddSuccess}></BranchAddModal>
       </div>
 
       {loading ? (
